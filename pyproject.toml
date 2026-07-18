@@ -148,3 +148,64 @@ reportUnnecessaryTypeIgnoreComment = "error"
 reportImplicitOverride = true
 reportDeprecated = "warning"
 reportImportCycles = "warning"
+
+# ============================================================
+# PYTEST CONFIGURATION
+# ============================================================
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "-W error",                               # STRICT: Treat warnings as errors (catch deprecations early)
+    "--tb=short",
+    "--cov=legai",
+    "--cov-report=term-missing:skip-covered",
+    "--cov-report=html",
+    "--cov-report=xml",
+    "--cov-fail-under=80",                    # STRICT: Require 80% coverage
+]
+filterwarnings = [
+    "error", # Treat all warnings as errors by default
+    # Uncomment to selectively ignore specific third-party warnings if needed:
+    # "ignore::DeprecationWarning:some_noisy_library",
+    # "ignore::UserWarning:another_library",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+]
+
+# ============================================================
+# COVERAGE CONFIGURATION
+# ============================================================
+[tool.coverage.run]
+source = ["legai"]
+branch = true
+omit = [
+    "*/tests/*",
+    "*/test_*.py",
+    "*/__pycache__/*",
+    "*/.venv/*",
+    "*/venv/*",
+    "*/scripts/*",
+]
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+skip_covered = false
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "@abstractmethod",
+    "@overload",
+]
