@@ -7,6 +7,96 @@ requires-python = ">=3.12"
 dependencies = []
 
 [project.optional-dependencies]
-dev = [
-    "ruff>=0.15.22",
+dev = ["ruff>=0.15.22"]
+
+# ============================================================
+# RUFF — lint, format, security
+# ============================================================
+[tool.ruff]
+target-version = "py312"
+line-length = 79
+src = ["legai", "tests"]
+exclude = [
+    ".eggs",
+    ".git",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".venv",
+    "build",
+    "dist",
 ]
+
+[tool.ruff.lint]
+# Comprehensive rule set for strict checking
+select = [
+    "E",     # pycodestyle errors
+    "F",     # pyflakes
+    "I",     # isort
+    "UP",    # pyupgrade
+    "B",     # flake8-bugbear
+    "BLE",   # flake8-blind-except (no bare except:)
+    "C4",    # flake8-comprehensions
+    "C90",   # mccabe complexity
+    "T20",   # flake8-print (no print statements)
+    "SIM",   # flake8-simplify
+    "N",     # pep8-naming
+    "Q",     # flake8-quotes
+    "RUF",   # Ruff-specific rules
+    "ASYNC", # flake8-async
+    "S",     # flake8-bandit (security)
+    "PTH",   # flake8-use-pathlib
+    "ERA",   # eradicate (commented-out code)
+    "PL",    # pylint (includes PLR1702: too-many-nested-blocks)
+    "PERF",  # perflint (performance)
+    "ARG",   # flake8-unused-arguments
+    "FBT",   # flake8-boolean-trap (no boolean positional args)
+    "RET",   # flake8-return
+]
+
+ignore = [
+    "E501", # Line too long (formatter handles this)
+    "S603", # subprocess without shell=True (too strict)
+    "S607", # Starting a process with a partial path (too strict)
+]
+
+# Complexity limits (anti-LLM-slop)
+[tool.ruff.lint.mccabe]
+max-complexity = 10 # Maximum cyclomatic complexity
+
+[tool.ruff.lint.pylint]
+max-nested-blocks = 3 # Maximum nested block depth (PLR1702)
+
+# Per-file ignores
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = [
+    "F401", # Allow unused imports in __init__.py
+]
+
+"tests/**/*.py" = [
+    "S101",    # Allow assert in tests
+    "PLR2004", # Allow magic values in tests
+    "FBT",     # Allow boolean args in tests
+]
+
+# Matches legacy [tool.isort]: profile=black, src_paths, sections, import_heading_*
+[tool.ruff.lint.isort]
+known-first-party = ["legai"]
+section-order = [
+    "future",
+    "standard-library",
+    "third-party",
+    "first-party",
+    "local-folder",
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.flake8-type-checking]
+strict = true
+
+[tool.ruff.format]
+quote-style = "preserve"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
