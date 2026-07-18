@@ -1,7 +1,7 @@
 .PHONY: help clean
 
 DIST ?= dist
-CHECK = strict_python tests packages/example_lib
+CHECK = legai tests
 
 help:  ## Show available make targets
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-14s %s\n", $$1, $$2}'
