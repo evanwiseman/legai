@@ -7,10 +7,7 @@ requires-python = ">=3.12"
 dependencies = []
 
 [project.optional-dependencies]
-dev = [
-    "basedpyright>=1.39.9",
-    "ruff>=0.15.22",
-]
+dev = ["basedpyright>=1.39.9", "ruff>=0.15.22"]
 
 # ============================================================
 # RUFF — lint, format, security
@@ -103,3 +100,46 @@ quote-style = "preserve"
 indent-style = "space"
 skip-magic-trailing-comma = false
 line-ending = "auto"
+
+# ============================================================
+# BASEDPYRIGHT
+# ============================================================
+[tool.basedpyright]
+pythonVersion = "3.12"
+typeCheckingMode = "strict"
+include = ["legai", "tests"]
+extraPaths = ["."]
+venvPath = "."
+venv = ".venv"
+exclude = [
+    "**/__pycache__",
+    ".git",
+    ".pyright_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".venv",
+    "build",
+    "dist",
+    "*.egg-info",
+]
+
+reportAny = true
+reportExplicitAny = true
+reportIgnoreCommentWithoutRule = true
+reportMissingSuperCall = true
+reportMissingTypeStubs = true
+reportUnknownArgumentType = true
+reportUnknownMemberType = true
+reportUnknownVariableType = true
+reportUnusedClass = "error"
+reportUnusedFunction = "error"
+reportUnusedVariable = "error"
+reportUnusedImport = "error"
+reportUnnecessaryCast = "error"
+reportUnnecessaryComparison = "error"
+reportUnnecessaryContains = "error"
+reportUnnecessaryIsInstance = "error"
+reportUnnecessaryTypeIgnoreComment = "error"
+reportImplicitOverride = true
+reportDeprecated = "warning"
+reportImportCycles = "warning"
