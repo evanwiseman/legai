@@ -68,6 +68,7 @@ select = [
     "ARG",   # flake8-unused-arguments
     "FBT",   # flake8-boolean-trap (no boolean positional args)
     "RET",   # flake8-return
+    "ANN",   # flake8-annotations
 ]
 
 ignore = [
